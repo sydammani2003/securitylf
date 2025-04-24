@@ -83,7 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: TextField(
                     style: TextStyle(color: Colors.white),
-                    maxLines: 5,
                     decoration: InputDecoration(
                       hintText: 'Enter Username',
                       hintStyle: TextStyle(color: Colors.grey),
@@ -114,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: 'Enter your password',
-                      hintStyle: const TextStyle(color: Colors.white),
+                      hintStyle: const TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
