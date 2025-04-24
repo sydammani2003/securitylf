@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:securitylf/screens/login.dart';
-import 'package:securitylf/screens/securityscan.dart';
 
 void main() {
   runApp(const MyApp());

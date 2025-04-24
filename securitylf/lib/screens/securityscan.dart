@@ -232,12 +232,12 @@ class ScanRecord extends StatelessWidget {
   final bool isVerified;
 
   const ScanRecord({
-    Key? key,
+    super.key,
     required this.name,
     required this.time,
     required this.location,
     required this.isVerified,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
