@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:securitylf/screens/scanner.dart';
 
-class SecurityScannerScreen extends StatelessWidget {
+class SecurityScannerScreen extends StatefulWidget {
   const SecurityScannerScreen({super.key});
 
+  @override
+  State<SecurityScannerScreen> createState() => _SecurityScannerScreenState();
+}
+
+class _SecurityScannerScreenState extends State<SecurityScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +60,12 @@ class SecurityScannerScreen extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    SvgPicture.asset('assets/images/FRAME (2).svg'),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => Scanning()));
+                        },
+                        child: SvgPicture.asset('assets/images/FRAME (2).svg')),
                     const SizedBox(height: 12),
                     const Text(
                       'Tap to Scan',
