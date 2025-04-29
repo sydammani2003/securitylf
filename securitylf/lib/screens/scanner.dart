@@ -13,6 +13,7 @@ class Scanning extends StatefulWidget {
 
 class _ScanningState extends State<Scanning> {
   Barcode? result;
+  String? data;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -78,7 +79,10 @@ class _ScanningState extends State<Scanning> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {});
+      setState(() {
+        result = scanData;
+        data = result!.code;
+      });
     });
   }
 }
