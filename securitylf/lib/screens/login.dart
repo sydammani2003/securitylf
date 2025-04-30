@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:securitylf/screens/securityscan.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +13,34 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
+  TextEditingController un = TextEditingController();
+  TextEditingController pw = TextEditingController();
+
+  Future<void> saveLoginCredentials() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('securityusername', 'security');
+    await prefs.setString('securitypassword', 'securitypass');
+  }
+
+  Future<String> getLoginCredentials(String username, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    final securityusername = prefs.getString('securityusername');
+    final securitypassword = prefs.getString('securitypassword');
+
+    if (securityusername == username && securitypassword == password) {
+      return 'security';
+    } else {
+      return 'Invalid Login Credentials';
+    }
+  }
+
+  String s = '';
+
+  @override
+  void initState() {
+    saveLoginCredentials();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: TextField(
+                    controller: un,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: 'Enter Username',
@@ -109,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: TextField(
+                    controller: pw,
                     obscureText: _obscureText,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
@@ -136,11 +167,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 24),
                 // Login Button
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => SecurityScannerScreen()));
+                  onPressed: () async {
+                    String a = await getLoginCredentials(un.text, pw.text);
+
+                    setState(() {
+                      s = a;
+                    });
+
+                    if (s == 'security') {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => SecurityScannerScreen()));
+                    } else {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(s)));
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff169976),
